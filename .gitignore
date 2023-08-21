@@ -1,0 +1,14 @@
+**/node_modules/
+/public/build/
+
+.DS_Store
+
+source/dist/*
+
+executable/out/*
+
+cert*
+
+*/.env
+
+source/*.tgz

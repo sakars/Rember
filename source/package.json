@@ -1,0 +1,59 @@
+{
+    "name": "rember-build",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "main": "./dist/main.cjs",
+    "files": [
+        "./dist/**/*"
+    ],
+    "scripts": {
+        "build:svelte": "rollup -c",
+        "dev:svelte": "rollup -c -w",
+        "start:svelte": "sirv public --no-clear",
+        "build:electron": "npx tsc -b ./electron",
+        "start:electron": "npx electron ./dist/index.cjs",
+        "build:public": "npx copy-files-from-to",
+        "build": "npx copy-files-from-to && npm run build:electron && npm run build:svelte",
+        "start": "npm run start:electron",
+        "dev": "npm run build && npm run start",
+        "check": "svelte-check",
+		"package": "npm run build && npm pack"
+    },
+    "copyFiles": [
+        {
+            "from": "./public/**/*",
+            "to": "./dist/public"
+        }
+    ],
+    "copyFilesSettings": {
+        "whenFileExists": "overwrite"
+    },
+    "devDependencies": {
+        "@electron/asar": "^3.2.4",
+        "@rollup/plugin-commonjs": "^24.0.0",
+        "@rollup/plugin-node-resolve": "^15.0.0",
+        "@rollup/plugin-terser": "^0.4.0",
+        "@rollup/plugin-typescript": "^11.1.2",
+        "@tsconfig/svelte": "^3.0.0",
+        "copy-files-from-to": "^3.9.0",
+        "electron": "^26.0.0",
+        "electron-squirrel-startup": "^1.0.0",
+        "electron-winstaller": "^5.1.0",
+        "npm-packlist": "^7.0.4",
+        "rollup": "^3.15.0",
+        "rollup-plugin-css-only": "^4.3.0",
+        "rollup-plugin-livereload": "^2.0.0",
+        "rollup-plugin-svelte": "^7.1.2",
+        "svelte": "^3.55.0",
+        "svelte-check": "^3.0.0",
+        "svelte-preprocess": "^5.0.0",
+        "tslib": "^2.6.2",
+        "typescript": "^4.9.5"
+    },
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "electron-store": "^8.1.0",
+        "sirv-cli": "^2.0.0"
+    }
+}
