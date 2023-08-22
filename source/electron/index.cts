@@ -1,4 +1,6 @@
-const Rember = require('./main.cjs');
+/// <reference path="./main.cts" />
+
+const { Rember } = require('./main.cjs');
 
 const { app } = require('electron');
 

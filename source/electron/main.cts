@@ -1,5 +1,5 @@
 /// <reference types="electron" />
-export default function Rember(app: Electron.App) {
+export function Rember(app: Electron.App) {
 	const { BrowserWindow, Menu, Tray, nativeImage } = require('electron');
 	const path = require('path');
 	require('./ipcHandler.cjs');

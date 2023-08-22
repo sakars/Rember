@@ -19,10 +19,10 @@
     "@electron-forge/maker-zip": "^6.4.0",
     "@electron-forge/plugin-auto-unpack-natives": "^6.4.0",
     "dotenv": "^16.3.1",
-    "electron": "26.0.0",
-    "electron-squirrel-startup": "^1.0.0"
+    "electron": "26.0.0"
   },
   "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
     "rember-build": "file:../source/rember-build-0.1.0.tgz"
   }
 }
