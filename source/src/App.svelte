@@ -1,12 +1,12 @@
 
 <script lang='ts'>
-	/// <reference path="../electron/shared/rendererCtx.d.ts" />
+	
 	import Card from './components/Card.svelte';
 	import type { ExposedCtx, ReminderData } from '../electron/shared/exposedCtx.cjs';
-	const ctx = window.electron;
+	import { ctx } from './context.js';
 	let rems = ctx.getReminders();
 	const now = new Date();
-	let remindersWithNextDate: ReminderData[] = [];
+	let remindersWithNextDate: Array<ReminderData & { nextReminderDate:Date }> = [];
 	$: remindersWithNextDate = rems.map(rem => {
 		let nextReminderDate: Date = rem.dates[0];
 		return {

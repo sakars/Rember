@@ -1,5 +1,4 @@
 <script lang="ts">
-	/// <reference path="../shared/rendererCtx.d.ts" />
 	import type { ExposedCtx, ReminderData } from "../../electron/shared/exposedCtx.cjs";
 	export let data: ReminderData & { nextReminderDate: Date };
 	export let dismissable: boolean | undefined;
