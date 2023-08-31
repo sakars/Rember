@@ -1,6 +1,6 @@
 {
   "name": "rember",
-  "version": "0.1.0",
+  "version": "0.1.1-alpha.1",
   "description": "An application to help you remember things",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,6 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "rember-build": "file:../source/rember-build-0.1.0.tgz"
+    "rember-build": "file:../source/rember-build-0.1.1-alpha.1.tgz"
   }
 }

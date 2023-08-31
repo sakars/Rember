@@ -1,24 +1,24 @@
 <script lang="ts">
 	import type { ExposedCtx, ReminderData } from "../../electron/shared/exposedCtx.cjs";
-	export let data: ReminderData & { nextReminderDate: Date };
+	export let data: ReminderData & { nextReminderDate: Date | undefined } | undefined;
 	export let dismissable: boolean | undefined;
 	if (dismissable === undefined) {
 		dismissable = false;
 	}
 	const currentDate = new Date();
 	let nextReminderDate: Date;
-	$: nextReminderDate = data.dates[0];
+	$: nextReminderDate = data?.nextReminderDate;
 	if (nextReminderDate === undefined) {
 		nextReminderDate = new Date();
 	}
-	console.log(data, data.dates[0], nextReminderDate);
+	console.log(data, nextReminderDate);
 	function dismissReminder() {
 		console.log('DISMISSIUM REMINDIUM');
 		window.electron.dismissReminder(data.name);
 	}
 
-	let delBtn;
-	let delCheck;
+	let delBtn: HTMLButtonElement;
+	let delCheck: HTMLInputElement;
 	function updateDelBtn() {
 		delBtn.disabled = !delCheck.checked;
 	}
