@@ -2,6 +2,7 @@
 <script lang='ts'>
 	
 	import Card from './components/Card.svelte';
+	import Swal from '../node_modules/sweetalert2/dist/sweetalert2.js';
 	import type { ExposedCtx, ReminderData } from '../electron/shared/exposedCtx.cjs';
 	import { ctx } from './context.js';
 	let rems = ctx.getReminders();
@@ -38,9 +39,18 @@
 			dates.push(nextDate);
 		}
 		const filteredDates: Date[] = dates.filter(date => date < endDate);
-		ctx.addReminder({name, dates: filteredDates});
-		console.log({name, dates: filteredDates});
-		rems = ctx.getReminders();
+		if (filteredDates.length !== 0) {
+			ctx.addReminder({name, dates: filteredDates});
+			console.log({name, dates: filteredDates});
+			rems = ctx.getReminders();
+		} else {
+			Swal.fire({
+				title: "Warning",
+				text: "Date is invalid",
+				confirmButtonClass: "btn btn-warning",
+				icon: "error"
+			});
+		}
 	}
 </script>
 
