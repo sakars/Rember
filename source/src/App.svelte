@@ -4,6 +4,7 @@
 	import Card from './components/Card.svelte';
 	import Swal from '../node_modules/sweetalert2/dist/sweetalert2.js';
 	import type { ExposedCtx, ReminderData } from '../electron/shared/exposedCtx.cjs';
+	import { v4 as uuidv4 } from '../node_modules/uuid';
 	import { ctx } from './context.js';
 	let rems = ctx.getReminders();
 	const now = new Date();
@@ -40,8 +41,9 @@
 		}
 		const filteredDates: Date[] = dates.filter(date => date < endDate);
 		if (filteredDates.length !== 0) {
-			ctx.addReminder({name, dates: filteredDates});
-			console.log({name, dates: filteredDates});
+			const reminderId = uuidv4();
+			ctx.addReminder({name, id: reminderId, dates: filteredDates});
+			console.log({name, reminderId, dates: filteredDates});
 			rems = ctx.getReminders();
 		} else {
 			Swal.fire({

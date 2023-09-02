@@ -1,4 +1,5 @@
 import { ReminderData } from "./shared/exposedCtx.cjs";
+import { v4 as uuidv4 } from 'uuid';
 /// <reference types="electron-store" />
 
 const Store = require('electron-store');
@@ -17,6 +18,7 @@ class ReminderStorage {
 		const serialized = this.reminders.map((reminder) => {
 			return {
 				name: reminder.name,
+				id: reminder.id,
 				dates: reminder.dates.map((date) => date.toISOString())
 			};
 		});
@@ -27,14 +29,25 @@ class ReminderStorage {
 		const serialized = store.get('reminders');
 		if (serialized) {
 			this.reminders = serialized.map((reminder) => {
-				return {
-					name: reminder.name,
-					dates: reminder.dates.map((date) => new Date(date))
-				};
+				if (reminder.id !== null && reminder.id !== undefined) {
+					return {
+						name: reminder.name,
+						id: reminder.id,
+						dates: reminder.dates.map((date) => new Date(date))
+					};
+				} else if (reminder.id === null || reminder.id === undefined) {
+					reminder.id = uuidv4();
+					return {
+						name: reminder.name,
+						id: reminder.id,
+						dates: reminder.dates.map((date) => new Date(date))
+					};
+				}
 			});
 		} else {
 			this.reminders = [];
 		}
+		this.saveReminders();
 		return this.reminders;
 	}
 
@@ -44,15 +57,15 @@ class ReminderStorage {
 		this.saveReminders();
 	}
 	
-	removeReminder(reminderName: string) {
-		this.reminders = this.reminders.filter((reminder) => reminder.name !== reminderName);
+	removeReminder(reminderId: uuidv4) {
+		this.reminders = this.reminders.filter((reminder) => reminder.id !== reminderId);
 		this.saveReminders();
 	}
 
-	dismissReminder(reminderName: string) {
+	dismissReminder(reminderId: uuidv4) {
 		this.getReminders();
 		
-		const reminder = this.reminders.find((reminder) => reminder.name === reminderName);
+		const reminder = this.reminders.find((reminder) => reminder.id === reminderId);
 		if (reminder) {
 			// filter all dates that are in the past (or today)
 			const today = truncateToDay(new Date());
@@ -61,7 +74,7 @@ class ReminderStorage {
 				(date) => truncateToDay(date) > today
 			);
 			if(reminder.dates.length === 0) {
-				this.removeReminder(reminderName);
+				this.removeReminder(reminderId);
 			}
 			this.saveReminders();
 		} else {
