@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ExposedCtx, ReminderData } from "../../electron/shared/exposedCtx.cjs";
+	import Swal from '../../node_modules/sweetalert2/dist/sweetalert2.js';
 	export let data: ReminderData & { nextReminderDate: Date | undefined } | undefined;
 	export let dismissable: boolean | undefined;
 	if (dismissable === undefined) {
@@ -13,8 +14,19 @@
 	}
 	console.log(data, nextReminderDate);
 	function dismissReminder() {
-		console.log('DISMISSIUM REMINDIUM');
+		console.log('DISMISSIUM REMINDIUM')
+		let audio = <HTMLAudioElement> document.getElementById('audioding');
+		audio.play();
+		audio.currentTime = 0;
 		window.electron.dismissReminder(data.name);
+		Swal.fire({
+			toast: true,
+			showConfirmButton: false,
+			position: 'top',
+			timer: '3000',
+			icon: 'success',
+			title: 'Reminder dismissed'
+		})
 	}
 
 	let delBtn: HTMLButtonElement;
