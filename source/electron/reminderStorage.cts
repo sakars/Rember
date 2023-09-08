@@ -4,13 +4,15 @@ import { ReminderData } from "./shared/exposedCtx.cjs";
 import Store = require('electron-store');
 import Helpers = require('./helpers.cjs');
 const { truncateToDay } = Helpers;
-const store = new Store();
+const globalStore = new Store();
 
 export class ReminderStorage {
 	private reminders: ReminderData[];
 	private store: Store;
 	constructor(store: Store) {
 		this.store = store;
+		this.reminders = [];
+		//throw this.store['mock'];
 		this.getReminders();
 	}
 
@@ -22,12 +24,16 @@ export class ReminderStorage {
 				dates: reminder.dates.map((date) => date.toISOString())
 			};
 		});
-		store.set('reminders', serialized);
+		this.store.set('reminders', serialized);
 	}
 
 	getReminders() {
-		const serialized = store.get('reminders');
-		if(!Array.isArray(serialized)) throw new Error('reminders is not an array');
+		const serialized = this.store.get('reminders');
+		if(serialized === undefined) {
+			this.saveReminders();
+			return this.reminders;
+		}
+		if(!Array.isArray(serialized)) throw new Error('reminders is not an array, it is ' + JSON.stringify(serialized));
 		if (serialized) {
 			this.reminders = serialized.map((reminder) => {
 				return {
@@ -73,4 +79,4 @@ export class ReminderStorage {
 	}
 }
 
-export const reminderStorage = new ReminderStorage(store);
+export const reminderStorage = new ReminderStorage(globalStore);

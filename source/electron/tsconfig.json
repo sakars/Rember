@@ -4,6 +4,5 @@
         "sourceMap": true,
         "module": "CommonJS",
         "target": "ESNext",
-		
     }
 }

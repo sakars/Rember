@@ -4,6 +4,7 @@
 	import Card from './components/Card.svelte';
 	import type { ExposedCtx, ReminderData } from '../electron/shared/exposedCtx.cjs';
 	import { ctx } from './context.js';
+	import { makeNewReminder } from './App.logic.js';
 	let rems = ctx.getReminders();
 	const now = new Date();
 	let remindersWithNextDate: Array<ReminderData & { nextReminderDate:Date }> = [];
@@ -18,30 +19,7 @@
 		console.log('update');
 		rems = ctx.getReminders();
 	});
-	function makeNewReminder() {
-		const name = (document.getElementById('reminderName') as HTMLInputElement).value;
-		const now = new Date();
-		const endDate = new Date((document.getElementById('reminderDate') as HTMLInputElement).value);
-		const dates: Date[] = [];
-		const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-		const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-		const fourthDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3);
-		const seventhDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
-		dates.push(today);
-		dates.push(tomorrow);
-		dates.push(fourthDay);
-		dates.push(seventhDay);
-		while (dates[dates.length - 1] < new Date(endDate)) {
-			const lastDate = dates[dates.length - 1];
-			const nextDate = new Date(lastDate);
-			nextDate.setDate(nextDate.getDate() + 30);
-			dates.push(nextDate);
-		}
-		const filteredDates: Date[] = dates.filter(date => date < endDate);
-		ctx.addReminder({name, dates: filteredDates});
-		console.log({name, dates: filteredDates});
-		rems = ctx.getReminders();
-	}
+	
 </script>
 
 <base href="./">
@@ -67,7 +45,7 @@
 	<input type="text" name="reminderName" id="reminderName" placeholder="Name"><br>
 	<label for="reminderDate">Reminder's end date</label>
 	<input type="date" name="reminderDate" id="reminderDate"><br>
-	<button id="" type="button" on:click={makeNewReminder}>Make new reminder</button>
+	<button id="" type="button" on:click={() => rems = makeNewReminder(ctx)}>Make new reminder</button>
 	
 </main>
 <style>
