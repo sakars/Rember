@@ -5,6 +5,6 @@
   	"exclude": ["node_modules/*", "__sapper__/*", "public/*"],
 	"compilerOptions": {
 		"ignoreDeprecations": "5.0",
-		"types": ["svelte"]
+		"types": ["svelte", "jest"]
 	}
 }
