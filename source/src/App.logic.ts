@@ -1,5 +1,6 @@
 
 import type { ExposedCtx, ReminderData } from "../electron/shared/exposedCtx.cjs";
+import Swal from '../node_modules/sweetalert2/dist/sweetalert2.js';
 
 export function makeNewReminder(ctx: ExposedCtx): ReminderData[] {
 	const name = (document.getElementById('reminderName') as HTMLInputElement).value;
@@ -21,7 +22,16 @@ export function makeNewReminder(ctx: ExposedCtx): ReminderData[] {
 		dates.push(nextDate);
 	}
 	const filteredDates: Date[] = dates.filter(date => date < endDate);
-	ctx.addReminder({name, dates: filteredDates});
-	console.log({name, dates: filteredDates});
+	if (filteredDates.length !== 0) {
+		ctx.addReminder({name, dates: filteredDates});
+		console.log({name, dates: filteredDates});
+	} else {
+		Swal.fire({
+			title: "Warning",
+			text: "Date is invalid",
+			confirmButtonClass: "btn btn-warning",
+			icon: "error"
+		});
+	}
 	return ctx.getReminders();
 }
