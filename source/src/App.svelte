@@ -19,7 +19,6 @@
 		console.log('update');
 		rems = ctx.getReminders();
 	});
-	
 </script>
 
 <base href="./">
