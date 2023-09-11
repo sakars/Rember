@@ -5,6 +5,7 @@
 	import Swal from '../node_modules/sweetalert2/dist/sweetalert2.js';
 	import type { ExposedCtx, ReminderData } from '../electron/shared/exposedCtx.cjs';
 	import { ctx } from './context.js';
+	import { makeNewReminder } from './App.logic.js';
 	let rems = ctx.getReminders();
 	const now = new Date();
 	let remindersWithNextDate: Array<ReminderData & { nextReminderDate:Date }> = [];
@@ -77,7 +78,7 @@
 	<input type="text" name="reminderName" id="reminderName" placeholder="Name"><br>
 	<label for="reminderDate">Reminder's end date</label>
 	<input type="date" name="reminderDate" id="reminderDate"><br>
-	<button id="" type="button" on:click={makeNewReminder}>Make new reminder</button>
+	<button id="" type="button" on:click={() => rems = makeNewReminder(ctx)}>Make new reminder</button>
 	
 </main>
 <style>
