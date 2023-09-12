@@ -5,24 +5,72 @@ import { v4 as uuidv4 } from '../node_modules/uuid';
 
 export function makeNewReminder(ctx: ExposedCtx): ReminderData[] {
 	const name = (document.getElementById('reminderName') as HTMLInputElement).value;
-	const now = new Date();
-	const endDate = new Date((document.getElementById('reminderDate') as HTMLInputElement).value);
-	const dates: Date[] = [];
-	const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-	const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-	const fourthDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3);
-	const seventhDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
-	dates.push(today);
-	dates.push(tomorrow);
-	dates.push(fourthDay);
-	dates.push(seventhDay);
-	while (dates[dates.length - 1] < new Date(endDate)) {
-		const lastDate = dates[dates.length - 1];
-		const nextDate = new Date(lastDate);
-		nextDate.setDate(nextDate.getDate() + 30);
-		dates.push(nextDate);
-	}
-	const filteredDates: Date[] = dates.filter(date => date < endDate);
+		const schedule = (document.getElementById('schedule') as HTMLInputElement).value;
+		const now = new Date();
+		const endDate = new Date((document.getElementById('reminderDate') as HTMLInputElement).value);
+		const dates: Date[] = [];
+		const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+		if (schedule === "schedule1") {	
+			const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+			const fourthDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3);
+			const seventhDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
+			dates.push(today);
+			dates.push(tomorrow);
+			dates.push(fourthDay);
+			dates.push(seventhDay);
+			while (dates[dates.length - 1] < new Date(endDate)) {
+				const lastDate = dates[dates.length - 1];
+				const nextDate = new Date(lastDate);
+				nextDate.setDate(nextDate.getDate() + 30);
+				dates.push(nextDate);
+			}
+		}
+		if (schedule === "schedule2"){
+			dates.push(today);
+			while (dates[dates.length - 1] < new Date(endDate)) {
+				const lastDate = dates[dates.length - 1];
+				const nextDate = new Date(lastDate);
+				nextDate.setDate(nextDate.getDate() + 1);
+				dates.push(nextDate);
+			}
+		}
+		if (schedule === "schedule3"){
+			dates.push(today);
+			while (dates[dates.length - 1] < new Date(endDate)) {
+				const lastDate = dates[dates.length - 1];
+				const nextDate = new Date(lastDate);
+				nextDate.setDate(nextDate.getDate() + 2);
+				dates.push(nextDate);
+			}
+		}
+		if (schedule === "schedule4"){
+			dates.push(today);
+			while (dates[dates.length - 1] < new Date(endDate)) {
+				const lastDate = dates[dates.length - 1];
+				const nextDate = new Date(lastDate);
+				nextDate.setDate(nextDate.getDate() + 7);
+				dates.push(nextDate);
+			}
+		}
+		if (schedule === "schedule5"){
+			dates.push(today);
+			while (dates[dates.length - 1] < new Date(endDate)) {
+				const lastDate = dates[dates.length - 1];
+				const nextDate = new Date(lastDate);
+				nextDate.setDate(nextDate.getDate() + 14);
+				dates.push(nextDate);
+			}
+		}
+		if (schedule === "schedule6"){
+			dates.push(today);
+			while (dates[dates.length - 1] < new Date(endDate)) {
+				const lastDate = dates[dates.length - 1];
+				const nextDate = new Date(lastDate);
+				nextDate.setDate(nextDate.getDate() + 30);
+				dates.push(nextDate);
+			}
+		}
+		const filteredDates: Date[] = dates.filter(date => date < endDate);
 	if (filteredDates.length !== 0) {
 		const reminderId = uuidv4();
 		ctx.addReminder({name, id: reminderId, dates: filteredDates});
