@@ -66,12 +66,12 @@ export class ReminderStorage {
 		this.saveReminders();
 	}
 	
-	removeReminder(reminderId: uuidv4) {
+	removeReminder(reminderId: typeof uuidv4) {
 		this.reminders = this.reminders.filter((reminder) => reminder.id !== reminderId);
 		this.saveReminders();
 	}
 
-	dismissReminder(reminderId: uuidv4) {
+	dismissReminder(reminderId: typeof uuidv4) {
 		this.getReminders();
 		
 		const reminder = this.reminders.find((reminder) => reminder.id === reminderId);

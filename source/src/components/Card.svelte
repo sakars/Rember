@@ -33,7 +33,7 @@
 		}).then((result) => {
 			if(result.isConfirmed) {
 				console.log('DELETIUM REMINDIUM');
-				window.electron.removeReminder(data.name);
+				window.electron.removeReminder(data.id);
 			} else {
 				console.log('Deletion canceled');
 			}

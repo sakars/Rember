@@ -1,6 +1,7 @@
 
 import type { ExposedCtx, ReminderData } from "../electron/shared/exposedCtx.cjs";
 import Swal from '../node_modules/sweetalert2/dist/sweetalert2.js';
+import { v4 as uuidv4 } from '../node_modules/uuid';
 
 export function makeNewReminder(ctx: ExposedCtx): ReminderData[] {
 	const name = (document.getElementById('reminderName') as HTMLInputElement).value;
