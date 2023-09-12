@@ -1,6 +1,7 @@
 
 import type { ExposedCtx, ReminderData } from "../electron/shared/exposedCtx.cjs";
 import Swal from '../node_modules/sweetalert2/dist/sweetalert2.js';
+import { v4 as uuidv4 } from '../node_modules/uuid';
 
 export function makeNewReminder(ctx: ExposedCtx): ReminderData[] {
 	const name = (document.getElementById('reminderName') as HTMLInputElement).value;
@@ -23,8 +24,9 @@ export function makeNewReminder(ctx: ExposedCtx): ReminderData[] {
 	}
 	const filteredDates: Date[] = dates.filter(date => date < endDate);
 	if (filteredDates.length !== 0) {
-		ctx.addReminder({name, dates: filteredDates});
-		console.log({name, dates: filteredDates});
+		const reminderId = uuidv4();
+		ctx.addReminder({name, id: reminderId, dates: filteredDates});
+		console.log({name, reminderId, dates: filteredDates});
 	} else {
 		Swal.fire({
 			title: "Warning",

@@ -15,7 +15,7 @@
 	console.log(data, nextReminderDate);
 	function dismissReminder() {
 		console.log('DISMISSIUM REMINDIUM');
-		window.electron.dismissReminder(data.name);
+		window.electron.dismissReminder(data.id);
 	}
 
 	let delBtn: HTMLButtonElement;
@@ -33,7 +33,7 @@
 		}).then((result) => {
 			if(result.isConfirmed) {
 				console.log('DELETIUM REMINDIUM');
-				window.electron.removeReminder(data.name);
+				window.electron.removeReminder(data.id);
 			} else {
 				console.log('Deletion canceled');
 			}
