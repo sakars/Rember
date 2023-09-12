@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ExposedCtx, ReminderData } from "../../electron/shared/exposedCtx.cjs";
+	import Swal from '../../node_modules/sweetalert2/dist/sweetalert2.js';
 	export let data: ReminderData & { nextReminderDate: Date | undefined } | undefined;
 	export let dismissable: boolean | undefined;
 	if (dismissable === undefined) {
@@ -23,8 +24,20 @@
 		delBtn.disabled = !delCheck.checked;
 	}
 	function deleteReminder() {
-		console.log('DELETIUM REMINDIUM');
-		window.electron.removeReminder(data.id);
+		Swal.fire({
+			text: 'Are you sure you want to delete',
+			icon: 'question',
+			confirmButtonText: 'DELETE',
+			denyButtonText: 'Cancel',
+			showDenyButton: 'true'
+		}).then((result) => {
+			if(result.isConfirmed) {
+				console.log('DELETIUM REMINDIUM');
+				window.electron.removeReminder(data.name);
+			} else {
+				console.log('Deletion canceled');
+			}
+		})
 	}
 </script>
 
