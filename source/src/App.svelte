@@ -47,12 +47,12 @@
 	<button id="" type="button" on:click={() => rems = makeNewReminder(ctx)}>Make new reminder</button>
 	<label for="schedule">Choose a schedule</label>
 	<select name="schedule" id="schedule">
-		<option value="schedule1">1-2-4-7-30</option>
-		<option value="schedule2">Every day</option>
-		<option value="schedule3">Every other day</option>
-		<option value="schedule4">Every week</option>
-		<option value="schedule5">Every other week</option>
-		<option value="schedule6">Every month</option>
+		<option value="1-2-3-7-30_schedule">1-2-4-7-30</option>
+		<option value="daily_schedule">Every day</option>
+		<option value="otherday_schedule">Every other day</option>
+		<option value="weekly_schedule">Every week</option>
+		<option value="biweekly_schedule">Every other week</option>
+		<option value="monthly_schedule">Every month</option>
 	</select>
 	
 </main>
