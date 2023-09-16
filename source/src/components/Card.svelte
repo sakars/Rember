@@ -14,7 +14,7 @@
 	}
 	console.log(data, nextReminderDate);
 	function dismissReminder() {
-		console.log('DISMISSIUM REMINDIUM')
+		console.log('DISMISSIUM REMINDIUM');
 		let audio = <HTMLAudioElement> document.getElementById('audioding');
 		audio.play();
 		audio.currentTime = 0;
@@ -26,7 +26,7 @@
 			timer: '3000',
 			icon: 'success',
 			title: 'Reminder dismissed'
-		})
+		});
 	}
 
 	let delBtn: HTMLButtonElement;
