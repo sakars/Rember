@@ -18,7 +18,7 @@
 		let audio = <HTMLAudioElement> document.getElementById('audioding');
 		audio.play();
 		audio.currentTime = 0;
-		window.electron.dismissReminder(data.name);
+		window.electron.dismissReminder(data.id);
 		Swal.fire({
 			toast: true,
 			showConfirmButton: false,
@@ -35,8 +35,20 @@
 		delBtn.disabled = !delCheck.checked;
 	}
 	function deleteReminder() {
-		console.log('DELETIUM REMINDIUM');
-		window.electron.removeReminder(data.name);
+		Swal.fire({
+			text: 'Are you sure you want to delete',
+			icon: 'question',
+			confirmButtonText: 'DELETE',
+			denyButtonText: 'Cancel',
+			showDenyButton: 'true'
+		}).then((result) => {
+			if(result.isConfirmed) {
+				console.log('DELETIUM REMINDIUM');
+				window.electron.removeReminder(data.id);
+			} else {
+				console.log('Deletion canceled');
+			}
+		})
 	}
 </script>
 
