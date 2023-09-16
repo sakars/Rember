@@ -15,7 +15,18 @@
 	console.log(data, nextReminderDate);
 	function dismissReminder() {
 		console.log('DISMISSIUM REMINDIUM');
+		let audio = <HTMLAudioElement> document.getElementById('audioding');
+		audio.play();
+		audio.currentTime = 0;
 		window.electron.dismissReminder(data.id);
+		Swal.fire({
+			toast: true,
+			showConfirmButton: false,
+			position: 'top',
+			timer: '3000',
+			icon: 'success',
+			title: 'Reminder dismissed'
+		});
 	}
 
 	let delBtn: HTMLButtonElement;
