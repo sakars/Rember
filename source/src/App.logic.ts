@@ -3,7 +3,7 @@ import type { ExposedCtx, ReminderData } from "../electron/shared/exposedCtx.cjs
 import Swal from '../node_modules/sweetalert2/dist/sweetalert2.js';
 import { v4 as uuidv4 } from '../node_modules/uuid';
 
-function makeSchedule(dates: Date[], endDate: Date, today: Date, step: number){
+function makeSchedule(dates: Date[], endDate: Date, today: Date, step: number) : Date[]{
 	while (dates[dates.length - 1] < new Date(endDate)) {
 		const lastDate = dates[dates.length - 1];
 		const nextDate = new Date(lastDate);
